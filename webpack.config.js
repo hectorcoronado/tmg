@@ -3,7 +3,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     // main root file of our application:
-    entry: './app/index.js',
+    entry: './app/Badge.js',
     /**
       * when webpack creates the single file for our app, it's going to output our code
       * - in the root of our project (`__dirname`)
