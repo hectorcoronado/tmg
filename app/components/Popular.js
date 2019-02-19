@@ -1,4 +1,30 @@
 var React = require('react')
+var PropTypes = require('prop-types')
+
+function SelectLanguage (props) {
+    // console.log(this) // -> undefined
+    var languages = ['all', 'javascript', 'ruby', 'java', 'css', 'python']
+
+    return (
+        <ul className='languages'>
+            {languages.map(function(lang) {
+                return (
+                    <li
+                        style={lang === props.selectedLanguage ? { color: '#d0021b' } : null }
+                        key={lang}
+                        onClick={props.onSelect.bind(null, lang)}>
+                            {lang}
+                    </li>
+                )
+            })}
+        </ul>
+    )
+}
+
+SelectLanguage.propTypes = {
+    selectedLanguage: PropTypes.string.isRequired,
+    onSelect: PropTypes.func.isRequired
+}
 
 class Popular extends React.Component {
     constructor (props) {
@@ -26,30 +52,14 @@ class Popular extends React.Component {
     }
 
     render () {
-        var languages = ['all', 'javascript', 'ruby', 'java', 'css', 'python']
         // console.log('up here', this) // -> Popular
-        /**
-          * in order to avoid a typical problem when using `map`, we need to declare
-          * the context under which it should run
-          * 
-          * the first argument to `map` will be the function we want to execute for each
-          * element in whatever array it's using, and the second will be `this` 
-          */
-
         return (
-            <ul className='languages'>
-                {languages.map(function(lang) {
-                    // console.log('down here', this) // -> Window, if we don't pass in `this` as 2nd argument to `map`! Otherwise // -> Popular :)
-                    return (
-                        <li
-                            style={lang === this.state.selectedLanguage ? { color: '#d0021b' } : null }
-                            key={lang}
-                            onClick={this.updateLanguage.bind(null, lang)}>
-                            {lang}
-                        </li>
-                    )
-                }, this)}
-            </ul>
+            <div>
+                <SelectLanguage
+                    selectedLanguage={this.state.selectedLanguage}
+                    onSelect={this.updateLanguage}
+                />
+            </div>
         )
     }
 }
