@@ -12,7 +12,8 @@ module.exports = {
       */
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'index_bundle.js'
+        filename: 'index_bundle.js',
+        publicPath: '/'
     },
     /**
       * and we tell webpack what transformations to perform on our different file types
@@ -35,5 +36,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'app/index.html'
         })
-    ]
+    ],
+    devServer: {
+        historyApiFallback: true
+    }
 }
