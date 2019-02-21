@@ -8,6 +8,7 @@ var Battle = require('./Battle')
 var Home = require('./Home')
 var Popular = require ('./Popular')
 var Nav = require('./Nav')
+var Results = require('./Results')
 
 /**
  * component may be comprised of:
@@ -25,6 +26,7 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path='/' component={Home} />
                         <Route exact path='/battle' component={Battle} />
+                        <Route path='/battle/results' component={Results} />
                         <Route path='/popular' component={Popular} />
                         <Route render={function () {
                             return <p>not found</p>
