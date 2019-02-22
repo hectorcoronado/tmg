@@ -2,6 +2,10 @@ var React = require('react')
 var PropTypes = require('prop-types')
 var Link = require('react-router-dom').Link
 
+var api = require('../utils/api')
+
+api.battle(['hectorcoronado', 'seldo'])
+
 function PlayerPreview (props) {
     return (
         <div>
