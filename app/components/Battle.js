@@ -2,36 +2,9 @@ var React = require('react')
 var PropTypes = require('prop-types')
 var Link = require('react-router-dom').Link
 
+var PlayerPreview = require('./PlayerPreview')
+
 var api = require('../utils/api')
-
-api.battle(['hectorcoronado', 'seldo'])
-
-function PlayerPreview (props) {
-    return (
-        <div>
-            <div className='column'>
-                <img
-                    className='avatar'
-                    src={props.avatar}
-                    alt={'avatar for ' + props.username}
-                />
-                <h2 className='username'>@{props.username}</h2>
-                <button
-                    className='reset'
-                    onClick={props.onReset.bind(null, props.id)}>
-                    reset
-                </button>
-            </div>
-        </div>
-    )
-}
-
-PlayerPreview.propTypes = {
-    avatar: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    onReset: PropTypes.func.isRequired,
-    username: PropTypes.string.isRequired
-}
 
 class PlayerInput extends React.Component {
     constructor (props) {
@@ -158,9 +131,13 @@ class Battle extends React.Component {
                         <PlayerPreview
                             avatar={playerOneImage}
                             username={playerOneName}
-                            onReset={this.handleReset}
-                            id='playerOne'
-                        />
+                        >
+                            <button
+                                className='reset'
+                                onClick={this.handleReset.bind(null, 'playerOne')}>
+                                reset
+                            </button>
+                        </PlayerPreview>
                     }
 
                     {!playerTwoName &&
@@ -175,9 +152,13 @@ class Battle extends React.Component {
                         <PlayerPreview
                             avatar={playerTwoImage}
                             username={playerTwoName}
-                            onReset={this.handleReset}
-                            id='playerTwo'
-                        />
+                        >
+                            <button
+                                className='reset'
+                                onClick={this.handleReset.bind(null, 'playerTwo')}>
+                                reset
+                            </button>
+                        </PlayerPreview>
                     }
                 </div>
 

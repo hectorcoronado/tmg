@@ -6,6 +6,8 @@ var params = '?client_id=' + id + '&client_secret=' + sec;
 
 /**
   * @param { username } string
+  * 
+  * external request to get specific user and narrow response to `data`
   */
 function getProfile (username) {
     return axios.get('https://api.github.com/users/' + username + params)
@@ -16,6 +18,8 @@ function getProfile (username) {
 
 /**
   * @param { username } string
+  * 
+  * external request to get 100 of a specific user's repos
   */
 function getRepos (username) {
     return axios.get('https://api.github.com/users/' + username + '/repos' + params + '&per_page=100')
@@ -23,6 +27,8 @@ function getRepos (username) {
 
 /**
   * @param { repos } array
+  * 
+  * no external requests, just sums total no. of stars for all of a user's repos
   */
 function getStarCount (repos) {
     return repos.data.reduce(function (count, repo) {
@@ -43,17 +49,22 @@ function handleError (error) {
     return null
 }
 
+/**
+ * @param { player } string
+ * 
+ * @return object w/`profile` & `score` 
+ */
 function getUserData (player) {
     /**
-      * `axios.all` takes an array of `Promise`s; once they all resolve, it calls
+      * `axios.all` takes an array of `Promise`'s; once they all resolve, it calls
       * the `.then` function
       */
     return axios.all([
         getProfile(player),
         getRepos(player)
-    ]).then(function (data) {
-        var profile = data[0] // return value of getProfile(player) above
-        var repos = data[1] // return value of getRepos(player) above
+    ]).then(function (data) { // `data` is the array returned by call to `axios.all`, so:
+        var profile = data[0] // `data[0]`: return value of getProfile(player), and...
+        var repos = data[1] // `data[1]`: return value of getRepos(player)
 
         return {
             profile: profile,
@@ -73,7 +84,6 @@ function sortPlayers(players) {
         return b.score - a.score
     })
 
-    console.log(sortedPlayers)
     return sortedPlayers
 }
 
@@ -84,6 +94,11 @@ module.exports = {
       * 2. we `map` over them and call `getUserData`
       * 3. returns a `Promise`; once it is resolved, it contains all players' information
       * 4. we then (`then`) call `sortPlayers` to get the winner
+      * 
+      * `battle` gets called in `Results` component, the return
+      * value of `getUserData` is an object with a `profile` and
+      * `score` property, and in `Results`, those are assigned to
+      * each individual player via the usage of `map` below
       */
     battle: function (players) {
         return axios.all(players.map(getUserData))
