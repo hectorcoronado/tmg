@@ -3,6 +3,7 @@ var PropTypes = require('prop-types')
 var queryString = require('query-string')
 var Link = require('react-router-dom').Link
 
+var Loading = require('./Loading')
 var PlayerPreview = require('./PlayerPreview')
 
 var api = require('../utils/api')
@@ -100,7 +101,7 @@ class Results extends React.Component {
         var loading = this.state.loading
 
         if (loading) {
-            return <p>loading</p>
+            return <Loading />
         }
 
         if (error) {
