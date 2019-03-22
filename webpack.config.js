@@ -26,7 +26,7 @@ module.exports = {
         ]
     },
     // and then tell webpack which mode to run in
-    mode: 'development',
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     /**
       * finally, since we're going to use an `index.html` file found under the `dist`
       * directory that webpack is going to create for us, we need to tell it how to do it,
